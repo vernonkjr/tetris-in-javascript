@@ -4,11 +4,11 @@ const context = canvas.getContext('2d');
 context.scale(20, 20);
 
 
-const matrix = [
-    [0, 0, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-];
+// const matrix = [
+//     [0, 0, 0],
+//     [1, 1, 1],
+//     [0, 1, 0]
+// ];
 
 const collide = (arena, player) => {
     const [m , o] = [player.matrix, player.pos];
@@ -32,6 +32,53 @@ const createMatrix = (w, h) => {
 
     return matrix;
 };
+
+ const createPiece = (type) => {
+     if (type === 'T') {
+         return [
+            [0, 0, 0],
+            [1, 1, 1],
+            [0, 1, 0]
+        ];
+     } else if (type === 'O') {
+        return [
+            [1, 1],
+            [1, 1]
+        ];
+     } else if (type === 'L') {
+        return [
+           [0, 1, 0],
+           [0, 1, 0],
+           [0, 1, 1]
+       ];
+    } else if (type === 'J') {
+        return [
+           [0, 1, 0],
+           [0, 1, 0],
+           [1, 1, 0]
+       ];
+    } else if (type === 'I') {
+        return [
+           [0, 1, 0, 0],
+           [0, 1, 0, 0],
+           [0, 1, 0, 0],
+           [0, 1, 0, 0]
+       ];
+    } else if (type === 'S') {
+        return [
+           [0, 1, 1],
+           [1, 1, 0],
+           [0, 0, 0]
+       ];
+    } else if (type === 'Z') {
+        return [
+           [1, 1, 0],
+           [0, 1, 1],
+           [0, 0, 0]
+       ];
+    }
+ };
+ 
 
 
 const draw = () => {
@@ -68,7 +115,7 @@ const playerDrop = () => {
     if (collide(arena, player)) {
         player.pos.y--;
         merge(arena, player);
-        player.pos.y = 0;
+        playerReset();
     }
     dropCounter = 0;
 }
@@ -79,6 +126,14 @@ const playerMove = (dir) => {
         player.pos.x -= dir;
     }
 };
+
+const playerReset = () => {
+    const pieces = 'ILJOTSZ';
+    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+    player.pos.y = 0;
+    player.pos.x = (arena[0].length / 2 | 0) -
+                    (player.matrix[0].length / 2 | 0);
+}
 
 const playerRotate = (dir) => {
     const pos = player.pos.x;
@@ -137,7 +192,7 @@ const arena = createMatrix(12, 20);
 
 const player = {
     pos: {x: 5, y: 5},
-    matrix: matrix
+    matrix: createPiece('T')
 };
 
 
