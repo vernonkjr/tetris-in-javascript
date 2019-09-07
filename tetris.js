@@ -3,13 +3,6 @@ const context = canvas.getContext('2d');
 
 context.scale(20, 20);
 
-
-// const matrix = [
-//     [0, 0, 0],
-//     [1, 1, 1],
-//     [0, 1, 0]
-// ];
-
 const collide = (arena, player) => {
     const [m , o] = [player.matrix, player.pos];
     for (let y = 0; y < m.length; y++) {
@@ -194,13 +187,13 @@ const update = (time = 0) => {
 
 const colors = [
     null,
-    'red',
-    'blue',
-    'violet',
-    'green',
-    'purple',
-    'orange',
-    'pink'
+    '#FF0D72',
+    '#0DC2FF',
+    '#0DFF72',
+    '#F538FF',
+    '#FF8E0d',
+    '#FFE138',
+    '#3877FF'
 ];
 
 const arena = createMatrix(12, 20);
